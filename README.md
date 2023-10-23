@@ -1,73 +1,109 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Todo List Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This repository contains the backend for a simple Todo List application built with NestJS, GraphQL, and SQLite.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- CRUD operations for tasks.
+- Mark tasks as completed.
+- SQLite database for local development and testing.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Getting Started
 
-## Installation
+### Prerequisites
 
-```bash
-$ pnpm install
-```
+- Node.js
+- npm
 
-## Running the app
+### Installation
 
-```bash
-# development
-$ pnpm run start
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/R1tter/todo-list-backend.git
+   ```
 
-# watch mode
-$ pnpm run start:dev
+2. Navigate to the project directory:
+   ```bash
+   cd todo-list-backend
+   ```
 
-# production mode
-$ pnpm run start:prod
-```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
 
-## Test
+4. Start the development server:
+   ```bash
+   npm run start
+   ```
 
-```bash
-# unit tests
-$ pnpm run test
+The GraphQL API should now be running on `http://localhost:3000/graphql`.
 
-# e2e tests
-$ pnpm run test:e2e
+## Usage
 
-# test coverage
-$ pnpm run test:cov
-```
+You can interact with the GraphQL API using tools like [GraphQL Playground](https://github.com/prisma-labs/graphql-playground) or [Postman](https://www.postman.com/).
 
-## Support
+### Sample GraphQL Queries/Mutations
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+1. **Create a Task**:
+   ```graphql
+   mutation {
+     createTask(input: { title: "Sample Task" }) {
+       id
+       title
+       completed
+     }
+   }
+   ```
 
-## Stay in touch
+2. **Get All Tasks**:
+   ```graphql
+   query {
+     getTasks {
+       id
+       title
+       completed
+     }
+   }
+   ```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+3. **Update a Task**:
+   ```graphql
+   mutation {
+     updateTask(id: 1, input: { title: "Updated Task Title" }) {
+       id
+       title
+     }
+   }
+   ```
+
+4. **Mark Task as Completed**:
+   ```graphql
+   mutation {
+     markTaskAsCompleted(id: 1) {
+       id
+       completed
+     }
+   }
+   ```
+
+5. **Delete a Task**:
+   ```graphql
+   mutation {
+     deleteTask(id: 1)
+   }
+   ```
+
+## Future Enhancements
+
+- User authentication and authorization.
+- Integration with AWS for production-ready database and deployment.
+- Frontend application integration.
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This project is licensed under the MIT License.

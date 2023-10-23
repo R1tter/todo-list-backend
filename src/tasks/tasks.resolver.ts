@@ -8,19 +8,19 @@ import { UpdateTaskInput } from './update-task.input';
 export class TasksResolver {
   constructor(private tasksService: TasksService) {}
 
-  // Query para obter todas as tarefas
+  // Query find all tasks
   @Query(() => [Task])
   async getTasks(): Promise<Task[]> {
     return this.tasksService.findAll();
   }
 
-  // Mutação para criar uma nova tarefa
+  // Mutation to create a task
   @Mutation(() => Task)
   async createTask(@Args('input') input: CreateTaskInput): Promise<Task> {
     return this.tasksService.createTask(input);
   }
 
-  // Mutação para atualizar uma tarefa
+  // Mutation to update a task
   @Mutation(() => Task)
   async updateTask(
     @Args('id') id: number,
@@ -29,16 +29,16 @@ export class TasksResolver {
     return this.tasksService.updateTask(id, input);
   }
 
-  // Mutação para marcar uma tarefa como concluída
+  // Mutation to mark as completed
   @Mutation(() => Task)
   async markTaskAsCompleted(@Args('id') id: number): Promise<Task> {
     return this.tasksService.markAsCompleted(id);
   }
 
-  // Mutação para deletar uma tarefa
+  // Mutation to delete a task
   @Mutation(() => Boolean)
   async deleteTask(@Args('id') id: number): Promise<boolean> {
     await this.tasksService.deleteTask(id);
-    return true; // Retorna true se a tarefa for deletada com sucesso
+    return true; // Returns true if was deleted successfully
   }
 }

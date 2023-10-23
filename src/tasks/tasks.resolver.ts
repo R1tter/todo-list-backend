@@ -2,31 +2,25 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { Task } from './task.entity';
 import { TasksService } from './tasks.service';
 import { CreateTaskInput } from './create-task.input';
-import { UpdateTaskInput } from './update-task.input'; // Você precisará criar esse DTO
+import { UpdateTaskInput } from './update-task.input';
 
 @Resolver(() => Task)
 export class TasksResolver {
   constructor(private tasksService: TasksService) {}
 
-  // 1. Mostrar a lista de tarefas
+  // Query para obter todas as tarefas
   @Query(() => [Task])
   async getTasks(): Promise<Task[]> {
     return this.tasksService.findAll();
   }
 
-  // 2. Permitir cadastro de nova tarefa
+  // Mutação para criar uma nova tarefa
   @Mutation(() => Task)
   async createTask(@Args('input') input: CreateTaskInput): Promise<Task> {
     return this.tasksService.createTask(input);
   }
 
-  // 3. Marcar a tarefa como concluída
-  @Mutation(() => Task)
-  async markTaskAsCompleted(@Args('id') id: number): Promise<Task> {
-    return this.tasksService.markAsCompleted(id);
-  }
-
-  // 4. Editar tarefa
+  // Mutação para atualizar uma tarefa
   @Mutation(() => Task)
   async updateTask(
     @Args('id') id: number,
@@ -35,9 +29,16 @@ export class TasksResolver {
     return this.tasksService.updateTask(id, input);
   }
 
-  // 5. Deletar tarefa
+  // Mutação para marcar uma tarefa como concluída
+  @Mutation(() => Task)
+  async markTaskAsCompleted(@Args('id') id: number): Promise<Task> {
+    return this.tasksService.markAsCompleted(id);
+  }
+
+  // Mutação para deletar uma tarefa
   @Mutation(() => Boolean)
   async deleteTask(@Args('id') id: number): Promise<boolean> {
-    return this.tasksService.deleteTask(id);
+    await this.tasksService.deleteTask(id);
+    return true; // Retorna true se a tarefa for deletada com sucesso
   }
 }
